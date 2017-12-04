@@ -11,41 +11,59 @@
  * @prop {Array} tunelLavado Lista de coches para lavar
  * @prop {Array} coches Lista de coches en el parking
  */
-class Parking{
+class Parking {
     /**
      * @param {number} capacidad Número de coches que entrar en el parking 
      */
-    constructor(capacidad){
-        this.capacidad=capacidad;
-        this.tunelLavado=[];
-        this.coches=[];
+    constructor(capacidad) {
+        this.capacidad = capacidad;
+        this.tunelLavado = [];
+        this.coches = [];
     }
     /**
      * @description Método para meter un coche en el parking
      * @param {Object} coche coche que metemos en el parking
      * @returns {number} -1 parking lleno, 0 ok 
      */
-    meterCoche(coche){
-        if(this.capacidad>0){
+    meterCoche(coche) {
+        if (this.capacidad > 0) {
             this.capacidad--;
-            if(coche.lavado==true){
+            if (coche.lavado == true) {
                 this.tunelLavado.push(coche.matricula);
-            }else{
+            } else {
                 this.coches.push(coche.matricula)
             }
             return 0;
-        }else{
+        } else {
             return -1;
         }
-       
+
+    }
+    /**
+     * @description Nos devuelve si el coche esta o no en el parking 
+     * @param {String} matricula coche a buscar
+     * @returns {Boolean} 
+     */
+    buscarCoche(matricula) {
+        if (this.coches.indexOf(matricula) >= 0) {
+            return true;
+        } else {
+            if (this.tunelLavado.indexOf(matricula) >= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
 }
 
 let parking = new Parking(2);
-let coche1={
-    matricula:"G3456745",
+let coche1 = {
+    matricula: "G3456745",
     lavado: true
 }
 console.log(parking.meterCoche(coche1));
 console.log(parking)
+console.log(parking.buscarCoche("G3456745"));
+console.log("salir")
